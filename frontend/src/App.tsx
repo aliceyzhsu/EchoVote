@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import favicon from './assets/favicon.png'
 import './styles/App.css'
 import ProposalStream from './components/ProposalStream'
 import EchoVote from './components/EchoVote'
@@ -14,11 +13,11 @@ function AppContent() {
   const [value_vec, setValueVec] = useState<number[]>([])
   const [showQuestionnaire, setShowQuestionnaire] = useState(false)
   const [cryptoList, setCryptoList] = useState([
-    { name: 'Bitcoin', symbol: 'BTC', price: 0, change24h: 0, icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png', isChecked: true, isFollowed: true },
-    { name: 'Ethereum', symbol: 'ETH', price: 0, change24h: 0, icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', isChecked: true, isFollowed: true },
-    { name: 'Solana', symbol: 'SOL', price: 0, change24h: 0, icon: 'https://cryptologos.cc/logos/solana-sol-logo.png', isChecked: false, isFollowed: false },
-    { name: 'Cardano', symbol: 'ADA', price: 0, change24h: 0, icon: 'https://cryptologos.cc/logos/cardano-ada-logo.png', isChecked: false, isFollowed: false },
-    { name: 'Polkadot', symbol: 'DOT', price: 0, change24h: 0, icon: 'https://cryptologos.cc/logos/polkadot-new-dot-logo.png', isChecked: false, isFollowed: false },
+    { name: 'AAVE', symbol: 'AAVE', price: 0, change24h: 0, icon: 'https://cryptologos.cc/logos/aave-aave-logo.png', isChecked: true, isFollowed: true },
+    { name: 'Uniswap', symbol: 'UNI', price: 0, change24h: 0, icon: 'https://cryptologos.cc/logos/uniswap-uni-logo.png', isChecked: true, isFollowed: true },
+    { name: 'EchoVote', symbol: 'ECHO', price: 0, change24h: 0, icon: './src/assets/echo.png', isChecked: true, isFollowed: true },
+    { name: 'Ethereum', symbol: 'ETH', price: 0, change24h: 0, icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', isChecked: true, isFollowed: false },
+    { name: 'BinanceCoin', symbol: 'BNB', price: 0, change24h: 0, icon: 'https://cryptologos.cc/logos/bnb-bnb-logo.png', isChecked: true, isFollowed: false },
   ])
   const { login, logout, authenticated, user } = usePrivy()
   const [userAddress, setUserAddress] = useState('')
@@ -56,7 +55,7 @@ function AppContent() {
   useEffect(() => {
     const fetchCryptoPrices = async () => {
       try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,cardano,polkadot&vs_currencies=usd&include_24hr_change=true')
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum,binancecoin,aave,uniswap&vs_currencies=usd&include_24hr_change=true')
         const data = await response.json()
         
         setCryptoList(prevList => prevList.map(crypto => {
@@ -98,10 +97,15 @@ function AppContent() {
     setShowQuestionnaire(false);
   };
 
+  const handleQuestionnaireComplete = (answers: number[]) => {
+    setValueVec(answers);
+    setShowQuestionnaire(false);
+  };
+
   return (
     <>
       <header className="header">
-        <img src={viteLogo} className="header-logo" alt="Logo" />
+        <img src={favicon} className="header-logo" alt="EchoVote Logo" />
         {authenticated ? (
           <button className="connect-wallet-btn" onClick={logout}>
             Disconnect
@@ -173,6 +177,8 @@ function AppContent() {
           <ProposalStream 
             value_vec={value_vec} 
             onOpenQuestionnaire={handleOpenQuestionnaire}
+            cryptoList={cryptoList}
+            isConnected={authenticated}
           />
           <EchoVote 
             value_vec={value_vec} 
@@ -181,7 +187,11 @@ function AppContent() {
         </div>
 
         {showQuestionnaire && (
-          <ValuesQuestionnaire onClose={handleCloseQuestionnaire} />
+          <ValuesQuestionnaire 
+            onClose={handleCloseQuestionnaire} 
+            onComplete={handleQuestionnaireComplete}
+            authenticated={authenticated}
+          />
         )}
       </div>
 
