@@ -17,10 +17,6 @@ npm run dev
 > [Onchain governance needs more participation](https://www.coinbase.com/institutional/research-insights/research/monthly-outlook/monthly-outlook-november-2024): 
 > relatively low levels of participation do pose greater challenges today. Many of the large DeFi protocols including Aave, Compound, Uniswap have all faced situations where non-contentious votes failed as a result of low participation rates.
 
-- [ref](https://www.notion.so/EchoVote-AI-1c6a3746491680da9b69c849bc55999c)
-- 人格/价值观测试自带流量，如果能够配合OKX的web3人格测试这样的巨头的活动，能很快地积累起用户基础
-
-
 1. 价值观：
 	- 我们相信web3的价值：去中心化
 	- 去中心化自治是区块链最早的用例之一
@@ -46,7 +42,28 @@ npm run dev
 - 接着我们用多个典型的性格各异的ai原型体，它们有着不同价值观向量，用原型体的价值观向量去拟合用户的价值观向量，就得到了与用户价值观最相符的代理
 - 相较传统的delegate给其他真人的优势：我们往往只能找到意见与我们自身“较为符合”的代表，不可能找到一个各方面价值观都和自己相符的代表。而我们量身定制的ai代理人可以
 
-## 
-7. 魔改版meta mask
-	- 解决accessibility问题的重磅产品
-	- 将proposal stream集成在用户每天使用的钱包中，极大地方便了用户接触治理的门槛和成本，让每个用户都能轻松地了解到自己持有的币的治理社区正在发生什么，并且能很容易地参与提案表决
+## Onchain Architecture
+![img](./media/architecture.png)
+
+which can be abstracted as below:
+
+![blackbox](./media/black-box.png)
+
+VotingContract stands for **Business-end**: DAOs or Protocols which want to use our service to boost voting turnout and governance participation rate. User Interface stands for **Consumer-end**: users who utilize EchoVote to be easily get involved in decentralizd governance. Both ends should be able to easily take advantage EchoVote service.
+
+## Future work
+将proposal stream整合入钱包插件，使用户参与治理就像查看余额一样简便。
+
+- 解决accessibility问题的重磅产品
+- 将proposal stream集成在用户每天使用的钱包中，极大地方便了用户接触治理的门槛和成本，让每个用户都能轻松地了解到自己持有的币的治理社区正在发生什么，并且能很容易地参与提案表决
+- 人格/价值观测试自带流量，如果能够配合OKX的web3人格测试这样的巨头的活动，能很快地积累起用户基础
+
+## UI demo
+![ui1](./media/UIdemo/ui1.png)
+
+![ui2](./media/UIdemo/ui2.png)
+![ui3](./media/UIdemo/ui3.png)
+![ui4](./media/UIdemo/ui4.png)
+![ui5](./media/UIdemo/ui5.png)
+![ui6](./media/UIdemo/ui6.png)
+![ui7](./media/UIdemo/ui7.png)
